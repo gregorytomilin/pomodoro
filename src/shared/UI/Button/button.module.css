@@ -1,0 +1,19 @@
+.button {
+  padding: 20px 25px;
+}
+
+.red {
+  background-color: var(--red);
+  color: var(--text-color-light);
+}
+.red:hover {
+  background-color: var(--red600);
+}
+.green {
+  background-color: var(--green);
+  color: var(--text-color-light);
+}
+
+.green:hover {
+  background-color: var(--green600);
+}

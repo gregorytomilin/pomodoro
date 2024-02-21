@@ -1,0 +1,48 @@
+#root {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.content {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.df {
+  display: flex;
+}
+.fd-c {
+  flex-direction: column;
+}
+.jc-c {
+  justify-content: center;
+}
+.jc-sb {
+  justify-content: space-between;
+}
+.gap15 {
+  gap: 15px;
+}
+.gap10 {
+  gap: 10px;
+}
+.gap20 {
+  gap: 20px;
+}
+.gap20 {
+  gap: 20px;
+}
+
+.fs18 {
+  font-size: 18px;
+}
+.fs24 {
+  font-size: 18px;
+}
+
+.fw-b {
+  font-weight: bold;
+}

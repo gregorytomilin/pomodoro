@@ -1,0 +1,10 @@
+.taskPage {
+  display: flex;
+  gap: 20px;
+}
+
+.tasksBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

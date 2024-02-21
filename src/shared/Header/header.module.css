@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+}
+.logo {
+  width: 200px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stat img {
+  width: 20px;
+  display: flex;
+}
