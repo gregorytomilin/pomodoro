@@ -33,7 +33,7 @@ export const TaskCreactor = () => {
     <div className="df gap20 fd-c">
       <Input placeholder={"Название задачи"} />
       <Button style={ButtonStyles.Green} onClick={addTask}>
-        создать задачу
+        Добавить
       </Button>
     </div>
   );
