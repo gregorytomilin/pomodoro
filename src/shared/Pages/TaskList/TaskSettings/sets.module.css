@@ -1,0 +1,29 @@
+.sets {
+  position: absolute;
+  right: 0;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 4px;
+
+  box-shadow: 2px 2px 14px 9px rgba(0, 0, 0, 0.211);
+
+  background: white;
+  z-index: 1;
+}
+.sets ul {
+  list-style: none;
+}
+.sets ul li {
+  padding: 3px 5px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.sets ul li:hover {
+  background: #efefef;
+}

@@ -10,6 +10,7 @@ export type TaskProps = {
   id: string;
   task: string;
   timeSpent?: number;
+  pomidoroQuantity: number;
 };
 export const TaskCreactor = () => {
   const [inputValue, inputChangedHandler] = useUnit([
@@ -24,6 +25,7 @@ export const TaskCreactor = () => {
       const newTask: TaskProps = {
         id: uid(),
         task: inputValue,
+        pomidoroQuantity: 1,
       };
       addTaskToArray(newTask);
     }
