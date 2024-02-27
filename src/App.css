@@ -23,6 +23,9 @@
 .jc-sb {
   justify-content: space-between;
 }
+.ai-c{
+  align-items: center;
+}
 .gap15 {
   gap: 15px;
 }

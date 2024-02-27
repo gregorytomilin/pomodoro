@@ -18,6 +18,7 @@ export const TaskList = () => {
                 task={task.task}
                 timeSpent={task.timeSpent}
                 pomidoroQuantity={task.pomidoroQuantity}
+                currentPomidoroTimeRemaining={task.currentPomidoroTimeRemaining}
               />
             );
           })}

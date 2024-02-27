@@ -3,6 +3,9 @@
   font-size: 16px;
   width: fit-content;
 }
+.button[disabled] {
+  opacity: 0.5;
+}
 
 .red {
   background-color: var(--red);
@@ -18,4 +21,13 @@
 
 .green:hover {
   background-color: var(--green600);
+}
+
+.greyBorder {
+  border: 1px solid #c4c4c4;
+  color: #c4c4c4;
+}
+
+.button[disabled]:hover {
+  background-color: none;
 }

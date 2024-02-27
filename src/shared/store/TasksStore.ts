@@ -6,8 +6,13 @@ import persist from "effector-localstorage";
 export const addTaskToArray = createEvent<TaskProps>();
 export const removeTaskFromArray = createEvent<string>();
 export const editTask = createEvent<{ id: string; task: string }>();
+export const timerTask = createEvent<{
+  id: string;
+  secondsRemaining: number;
+}>();
 export const addPomidoro = createEvent<{ id: string }>();
 export const removePomidoro = createEvent<{ id: string }>();
+export const addMinute = createEvent<{ id: string }>();
 
 // Создаем хранилище для массива объектов
 export const $tasksArray = createStore<Array<TaskProps>>([])
@@ -32,6 +37,18 @@ export const $tasksArray = createStore<Array<TaskProps>>([])
           transition: Bounce,
         });
         return { ...task, task: editedTask.task };
+      }
+      return task;
+    });
+  })
+  // Редактируем объект из массива по id
+  .on(timerTask, (state, editedTask) => {
+    return state.map((task) => {
+      if (task.id === editedTask.id) {
+        return {
+          ...task,
+          currentPomidoroTimeRemaining: editedTask.secondsRemaining,
+        };
       }
       return task;
     });
@@ -66,6 +83,18 @@ export const $tasksArray = createStore<Array<TaskProps>>([])
           return task;
         }
         return { ...task, pomidoroQuantity: (task.pomidoroQuantity -= 1) };
+      }
+      return task;
+    })
+  )
+  .on(addMinute, (state, editedTask) =>
+    state.map((task) => {
+      if (task.id === editedTask.id) {
+        return {
+          ...task,
+          currentPomidoroTimeRemaining:
+            (task.currentPomidoroTimeRemaining += 60),
+        };
       }
       return task;
     })

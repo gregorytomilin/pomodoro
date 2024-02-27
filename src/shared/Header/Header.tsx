@@ -8,11 +8,11 @@ export const Header = () => {
   return (
     <div className={classes.header}>
       <div>
-        <Link to="/">
+        <Link to="/pomodoro/">
           <img className={classes.logo} src={logo} alt="logo" />
         </Link>
       </div>
-      <Link to="/stat" className={classes.stat}>
+      <Link to="/pomodoro/stat" className={classes.stat}>
         <img src={stat} alt="" />
         статистика
       </Link>

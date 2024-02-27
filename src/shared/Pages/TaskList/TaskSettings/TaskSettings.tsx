@@ -1,13 +1,13 @@
 import classes from "./sets.module.css";
-import pencil from "../../../../assets/svg/pencil.svg";
-import plus from "../../../../assets/svg/plus.svg";
-import minus from "../../../../assets/svg/minus.svg";
-import trash from "../../../../assets/svg/trash.svg";
+import pencil from "@assets/svg/pencil.svg";
+import plus from "@assets/svg/plus.svg";
+import minus from "@assets/svg/minus.svg";
+import trash from "@assets/svg/trash.svg";
 import {
   addPomidoro,
   removePomidoro,
   removeTaskFromArray,
-} from "../../../store/TasksStore";
+} from "@/shared/store/TasksStore";
 import { useRef } from "react";
 
 interface TaskSettingsProps {
@@ -17,7 +17,7 @@ interface TaskSettingsProps {
 }
 export const TaskSettings = (props: TaskSettingsProps) => {
   const { id, onClose, setEditMode } = props;
-  const setsRef = useRef<HTMLDivElement>(null);
+  const setsRef = useRef(null);
 
   return (
     <div className={classes.sets} ref={setsRef}>

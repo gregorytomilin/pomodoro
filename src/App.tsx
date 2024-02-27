@@ -15,8 +15,8 @@ function App() {
         <Header />
         <div className="content">
           <Routes>
-            <Route path="/" element={<TasksPage />} />
-            <Route path="/stat" element={<StatPage />} />
+            <Route path="/pomodoro/" element={<TasksPage />} />
+            <Route path="/pomodoro/stat" element={<StatPage />} />
             <Route path="*" element={<Page404 />} />
           </Routes>
         </div>

@@ -35,7 +35,7 @@ export const Task = (props: TaskProps) => {
               type="text"
               defaultValue={task}
               ref={inputRef}
-              className={classes.inputChange} // onChange={(e) => (task = e.target.value)}
+              className={classes.inputChange}
             />
             <button className={classes.saveButton} onClick={() => saveTask()}>
               сохранить

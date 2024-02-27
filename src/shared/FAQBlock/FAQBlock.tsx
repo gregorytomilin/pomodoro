@@ -1,6 +1,6 @@
 export const FAQBlock = () => {
   return (
-    <div className="df fd-c" style={{color: 'var(--text-color)'}}>
+    <div className="df fd-c" style={{ color: "var(--text-color)" }}>
       <div className="fs24 fw-b">Ура! Теперь можно начать работать:</div>
       <ul>
         <li className="fs18">
