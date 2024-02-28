@@ -3,6 +3,8 @@ import {
   $tasksArray,
   addMinute,
   removePomidoro,
+  removeTaskFromArray,
+  resetTaskTimer,
   setTimerStarted,
   timerTask,
 } from "../store/TasksStore";
@@ -55,6 +57,13 @@ export const Timer = () => {
     }, 1000);
   };
 
+  const taskDone = () => {
+    removeTaskFromArray(currentTask.id);
+  };
+  const resetTask = () => {
+    resetTaskTimer(currentTask.id);
+  };
+
   const timerString = secToTimer(currentTask.currentPomidoroTimeRemaining);
   return (
     <div className={classes.timer}>
@@ -91,7 +100,7 @@ export const Timer = () => {
             </svg>
           </div>
         </div>
-        <div className="taskName">Задача-1 - {currentTask?.task}</div>
+        {/* <div className="taskName">Задача-1 - {currentTask?.task}</div> */}
         <div className={`${classes.timerControls}`}>
           <Button
             style={ButtonStyles.Green}
@@ -109,10 +118,20 @@ export const Timer = () => {
           <Button
             disabled={!isTimerStarted && !currentTask.isTaskStarted}
             style={
-              !isTimerStarted ? ButtonStyles.GreyBorder : ButtonStyles.RedBorder
+              !currentTask.isTaskStarted
+                ? ButtonStyles.GreyBorder
+                : !isTimerStarted
+                ? ButtonStyles.Red
+                : ButtonStyles.RedBorder
             }
             onClick={() => {
-              setIsTimerStarted(false);
+              // Задача завершена
+              if (currentTask.isTaskStarted && !isTimerStarted) taskDone();
+              // Задача остановлена, таймер сброшен
+              if (currentTask.isTaskStarted && isTimerStarted) {
+                setIsTimerStarted(false);
+                resetTask();
+              }
             }}
           >
             {!isTimerStarted && currentTask.isTaskStarted ? "Сделано" : "Стоп"}

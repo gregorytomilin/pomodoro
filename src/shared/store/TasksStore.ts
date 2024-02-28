@@ -2,6 +2,7 @@ import { createEvent, createStore } from "effector";
 import { TaskProps } from "../TasksCreactor";
 import { Bounce, toast } from "react-toastify";
 import persist from "effector-localstorage";
+import { TIMER_DURATION } from "@/consts";
 
 export const addTaskToArray = createEvent<TaskProps>();
 export const removeTaskFromArray = createEvent<string>();
@@ -13,7 +14,11 @@ export const timerTask = createEvent<{
 export const addPomidoro = createEvent<{ id: string }>();
 export const removePomidoro = createEvent<{ id: string }>();
 export const addMinute = createEvent<{ id: string }>();
-export const setTimerStarted = createEvent<{ id: string; isStarted: boolean }>();
+export const setTimerStarted = createEvent<{
+  id: string;
+  isStarted: boolean;
+}>();
+export const resetTaskTimer = createEvent<string>();
 
 // Создаем хранилище для массива объектов
 export const $tasksArray = createStore<Array<TaskProps>>([])
@@ -106,6 +111,17 @@ export const $tasksArray = createStore<Array<TaskProps>>([])
         return {
           ...task,
           isTaskStarted: editedTask.isStarted,
+        };
+      }
+      return task;
+    });
+  })
+  .on(resetTaskTimer, (state, taskId) => {
+    return state.map((task) => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          currentPomidoroTimeRemaining: TIMER_DURATION,
         };
       }
       return task;
