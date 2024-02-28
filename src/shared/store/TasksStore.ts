@@ -2,7 +2,7 @@ import { createEvent, createStore } from "effector";
 import { TaskProps } from "../TasksCreactor";
 import { Bounce, toast } from "react-toastify";
 import persist from "effector-localstorage";
-import { TIMER_DURATION } from "@/consts";
+import { TIMER_DURATION } from "../../consts";
 
 export const addTaskToArray = createEvent<TaskProps>();
 export const removeTaskFromArray = createEvent<string>();

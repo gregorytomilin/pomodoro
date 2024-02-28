@@ -1,3 +1,3 @@
 export const StatPage = () => {
-  return <div>StatPage</div>;
+  return <div className="scaleIn">StatPage</div>;
 };

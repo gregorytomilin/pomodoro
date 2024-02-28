@@ -23,7 +23,7 @@
 .jc-sb {
   justify-content: space-between;
 }
-.ai-c{
+.ai-c {
   align-items: center;
 }
 .gap15 {
@@ -48,4 +48,17 @@
 
 .fw-b {
   font-weight: bold;
+}
+
+.scaleIn {
+  animation: scaleIn .1s ease-in-out forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.98); /* Начальное состояние элемента: невидимый */
+  }
+  to {
+    transform: scale(1); /* Конечное состояние элемента: видимый */
+  }
 }

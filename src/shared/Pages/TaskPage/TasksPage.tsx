@@ -6,7 +6,7 @@ import classes from "./taskPage.module.css";
 
 export const TasksPage = () => {
   return (
-    <div className={classes.taskPage}>
+    <div className={`${classes.taskPage} scaleIn`}>
       <div className={classes.tasksBlock}>
         <FAQBlock />
         <TaskCreactor />
