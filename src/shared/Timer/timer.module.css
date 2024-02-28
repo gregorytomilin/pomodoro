@@ -28,9 +28,14 @@
   border-radius: 50%;
   background: #c4c4c4;
   color: white;
-  font-size: 18px;
+  font-size: 36px;
   line-height: 26px;
   cursor: pointer;
+}
+.addMinutes svg {
+  width: 30px;
+  height: 30px;
+  stroke: black;
 }
 .addMinutes:hover {
   background: #9f9f9f;

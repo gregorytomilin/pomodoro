@@ -23,6 +23,8 @@ export const Timer = () => {
       if (intervalId) clearInterval(intervalId);
     } else {
       if (!currentTask) return;
+      !currentTask.isTaskStarted &&
+        setTimerStarted({ id: currentTask.id, isStarted: true });
     }
   }, [
     currentTask,
@@ -39,10 +41,6 @@ export const Timer = () => {
     setIntervalId(newTimerId); // Сохраните новый timerId в состоянии
   };
 
-  //   const stopTimer = () => {
-  //     console.log("timerId", intervalId);
-  //     clearInterval(intervalId); // Остановите интервал, используя текущий timerId
-  //   };
   const timer = () => {
     return setInterval(() => {
       if (currentTask.currentPomidoroTimeRemaining === 0) {
@@ -83,7 +81,14 @@ export const Timer = () => {
             className={classes.addMinutes}
             onClick={() => addMinute({ id: currentTask.id })}
           >
-            ➕
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M4 12H20M12 4V20"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
         </div>
         <div className="taskName">Задача-1 - {currentTask?.task}</div>
@@ -93,7 +98,6 @@ export const Timer = () => {
             onClick={() => {
               !isTimerStarted && startTimer();
               setIsTimerStarted((prev) => !prev);
-              setTimerStarted({ id: currentTask.id });
             }}
           >
             {isTimerStarted
@@ -103,7 +107,7 @@ export const Timer = () => {
               : "Старт"}
           </Button>
           <Button
-            disabled={!isTimerStarted}
+            disabled={!isTimerStarted && !currentTask.isTaskStarted}
             style={
               !isTimerStarted ? ButtonStyles.GreyBorder : ButtonStyles.RedBorder
             }
@@ -111,7 +115,7 @@ export const Timer = () => {
               setIsTimerStarted(false);
             }}
           >
-            Стоп
+            {!isTimerStarted && currentTask.isTaskStarted ? "Сделано" : "Стоп"}
           </Button>
         </div>
       </div>

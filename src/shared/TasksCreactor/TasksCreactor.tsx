@@ -13,7 +13,7 @@ export type TaskProps = {
   timeSpent?: number;
   pomidoroQuantity: number;
   currentPomidoroTimeRemaining: number;
-  isTaskStarted: number;
+  isTaskStarted: boolean;
 };
 export const TaskCreactor = () => {
   const [inputValue, inputChangedHandler] = useUnit([
@@ -30,7 +30,7 @@ export const TaskCreactor = () => {
         task: inputValue,
         pomidoroQuantity: 1,
         currentPomidoroTimeRemaining: TIMER_DURATION,
-        isTaskStarted: 0,
+        isTaskStarted: false,
       };
       addTaskToArray(newTask);
     }
