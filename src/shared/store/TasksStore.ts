@@ -13,6 +13,7 @@ export const timerTask = createEvent<{
 export const addPomidoro = createEvent<{ id: string }>();
 export const removePomidoro = createEvent<{ id: string }>();
 export const addMinute = createEvent<{ id: string }>();
+export const setTimerStarted = createEvent<{ id: string }>();
 
 // Создаем хранилище для массива объектов
 export const $tasksArray = createStore<Array<TaskProps>>([])
@@ -98,7 +99,18 @@ export const $tasksArray = createStore<Array<TaskProps>>([])
       }
       return task;
     })
-  );
+  )
+  .on(setTimerStarted, (state, editedTask) => {
+    return state.map((task) => {
+      if (task.id === editedTask.id) {
+        return {
+          ...task,
+          isTaskStarted: 1,
+        };
+      }
+      return task;
+    });
+  });
 
 persist({
   store: $tasksArray,

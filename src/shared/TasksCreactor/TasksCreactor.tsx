@@ -5,6 +5,7 @@ import { useUnit } from "effector-react";
 import { uid } from "uid";
 import { ButtonStyles } from "../UI/Button/ButtonStyles.enum";
 import { addTaskToArray } from "../store/TasksStore";
+import { TIMER_DURATION } from "@/consts";
 
 export type TaskProps = {
   id: string;
@@ -12,6 +13,7 @@ export type TaskProps = {
   timeSpent?: number;
   pomidoroQuantity: number;
   currentPomidoroTimeRemaining: number;
+  isTaskStarted: number;
 };
 export const TaskCreactor = () => {
   const [inputValue, inputChangedHandler] = useUnit([
@@ -27,7 +29,8 @@ export const TaskCreactor = () => {
         id: uid(),
         task: inputValue,
         pomidoroQuantity: 1,
-        currentPomidoroTimeRemaining: 1 * 10
+        currentPomidoroTimeRemaining: TIMER_DURATION,
+        isTaskStarted: 0,
       };
       addTaskToArray(newTask);
     }

@@ -28,14 +28,18 @@
   border-radius: 50%;
   background: #c4c4c4;
   color: white;
-  font-size: 26px;
+  font-size: 18px;
   line-height: 26px;
   cursor: pointer;
 }
+.addMinutes:hover {
+  background: #9f9f9f;
+}
 .timerCounts {
   font-size: 150px;
+  font-weight: 300;
 }
-.timerControls{
-    display: flex;
-    gap: 20px;
+.timerControls {
+  display: flex;
+  gap: 20px;
 }

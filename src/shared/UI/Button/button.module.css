@@ -2,9 +2,11 @@
   padding: 20px 25px;
   font-size: 16px;
   width: fit-content;
+  border: 1px solid transparent;
 }
 .button[disabled] {
   opacity: 0.5;
+  cursor: default;
 }
 
 .red {
@@ -26,6 +28,10 @@
 .greyBorder {
   border: 1px solid #c4c4c4;
   color: #c4c4c4;
+}
+.redBorder {
+  border: 1px solid var(--red);
+  color: var(--red);
 }
 
 .button[disabled]:hover {

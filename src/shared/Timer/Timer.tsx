@@ -3,6 +3,7 @@ import {
   $tasksArray,
   addMinute,
   removePomidoro,
+  setTimerStarted,
   timerTask,
 } from "../store/TasksStore";
 import classes from "./timer.module.css";
@@ -18,9 +19,21 @@ export const Timer = () => {
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const currentTask = tasksStore.at(-1);
   useEffect(() => {
-    if (!isTimerStarted) intervalId && clearInterval(intervalId);
-  }, [intervalId, isTimerStarted]);
+    if (!isTimerStarted) {
+      if (intervalId) clearInterval(intervalId);
+    } else {
+      if (!currentTask) return;
+    }
+  }, [
+    currentTask,
+    currentTask?.id,
+    currentTask?.isTaskStarted,
+    intervalId,
+    isTimerStarted,
+  ]);
+
   if (!currentTask) return <div>no tasks</div>;
+
   const startTimer = () => {
     const newTimerId = timer();
     setIntervalId(newTimerId); // Сохраните новый timerId в состоянии
@@ -49,38 +62,52 @@ export const Timer = () => {
     <div className={classes.timer}>
       <div
         className={classes.timerHeader}
-        style={{ backgroundColor: "#DC3E22", color: "white" }}
-        // style={{ backgroundColor: isTimerStarted ? "#DC3E22" : 'inherit' }}
+        style={
+          isTimerStarted
+            ? { backgroundColor: "var(--red)", color: "white!important" }
+            : {}
+        }
       >
         <span>{currentTask?.task}</span>
         <span>Помидор {currentTask?.pomidoroQuantity}</span>
       </div>
       <div className={classes.timerBody}>
         <div className="df gap20 ai-c">
-          <div className={classes.timerCounts}>{timerString}</div>
+          <div
+            className={classes.timerCounts}
+            style={isTimerStarted ? { color: "#DC3E22" } : {}}
+          >
+            {timerString}
+          </div>
           <div
             className={classes.addMinutes}
             onClick={() => addMinute({ id: currentTask.id })}
           >
-            +
+            ➕
           </div>
         </div>
         <div className="taskName">Задача-1 - {currentTask?.task}</div>
         <div className={`${classes.timerControls}`}>
           <Button
-            disabled={isTimerStarted}
             style={ButtonStyles.Green}
             onClick={() => {
-              startTimer();
-              setIsTimerStarted(true);
+              !isTimerStarted && startTimer();
+              setIsTimerStarted((prev) => !prev);
+              setTimerStarted({ id: currentTask.id });
             }}
           >
-            Старт
+            {isTimerStarted
+              ? "Пауза"
+              : currentTask.isTaskStarted
+              ? "Продолжить"
+              : "Старт"}
           </Button>
           <Button
-            style={ButtonStyles.GreyBorder}
+            disabled={!isTimerStarted}
+            style={
+              !isTimerStarted ? ButtonStyles.GreyBorder : ButtonStyles.RedBorder
+            }
             onClick={() => {
-              console.log(intervalId);
               setIsTimerStarted(false);
             }}
           >
