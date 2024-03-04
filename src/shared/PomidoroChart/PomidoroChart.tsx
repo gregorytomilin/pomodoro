@@ -14,7 +14,9 @@ export const PomidoroChart = () => {
   // const [workTimeArray, setWorkTimeArray] = useState<chartItem[]>([]);
   const tasksStore = useUnit($progressStore);
 
-  const getWeeksData = tasksStore
+  const getWeeksData = tasksStore;
+  console.log(getWeeksData);
+
   const echartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
