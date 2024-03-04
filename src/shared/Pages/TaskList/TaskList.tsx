@@ -1,9 +1,9 @@
 import { useUnit } from "effector-react";
-import { $tasksArray } from "../../store/TasksStore";
+import { $tasksStore } from "../../store/TasksStore";
 import { Task } from "./Task";
 
 export const TaskList = () => {
-  const tasksStore = useUnit($tasksArray);
+  const tasksStore = useUnit($tasksStore);
   return (
     <div>
       {tasksStore.length > 0 &&

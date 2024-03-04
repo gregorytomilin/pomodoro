@@ -1,9 +1,9 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: Roboto;
+  line-height: 1;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
   color: rgba(0, 0, 0, 0.87);
   background-color: #ffffff;
 
@@ -12,11 +12,22 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --red: #dc3e22;
+  --red300: #ea8a79;
+  --red500: #dc3e22;
   --red600: #b5311a;
   --green: #a8b64f;
   --green600: #96a43d;
 
+  --grey400: #f4f4f4;
+  --grey500: #c2c2c2;
+
+  --orange300: #ffdda9;
+  --orange400: #ffae35;
+  --violet300: #dfdcfe;
+  --violet400: #9c97d7;
+  --blue300: #c5f1ff;
+  --blue400: #7fc2d7;
+  --black600: #333333;
   --text-color: #2b2b2b;
   --text-color-light: #ffffff;
 

@@ -43,15 +43,25 @@
   font-size: 18px;
 }
 .fs24 {
-  font-size: 18px;
+  font-size: 24px;
+}
+.fs64 {
+  font-size: 64px;
 }
 
 .fw-b {
   font-weight: bold;
 }
+.fw-400 {
+  font-weight: 400;
+}
+
+.f-g {
+  flex-grow: 1;
+}
 
 .scaleIn {
-  animation: scaleIn .1s ease-in-out forwards;
+  animation: scaleIn 0.1s ease-in-out forwards;
 }
 
 @keyframes scaleIn {
@@ -61,4 +71,10 @@
   to {
     transform: scale(1); /* Конечное состояние элемента: видимый */
   }
+}
+
+.card {
+  background: var(--grey400);
+  color: var(--black600);
+  padding: 20px;
 }

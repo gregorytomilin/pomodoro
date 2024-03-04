@@ -1,6 +1,6 @@
 import { useUnit } from "effector-react";
 import {
-  $tasksArray,
+  $tasksStore,
   addMinute,
   removePomidoro,
   removeTaskFromArray,
@@ -15,7 +15,7 @@ import { useSecondsToMinutes } from "../hooks/useSecondsToMinutes";
 import { useEffect, useState } from "react";
 
 export const Timer = () => {
-  const tasksStore = useUnit($tasksArray);
+  const tasksStore = useUnit($tasksStore);
   const secToTimer = useSecondsToMinutes();
   const [isTimerStarted, setIsTimerStarted] = useState(false);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
@@ -71,7 +71,7 @@ export const Timer = () => {
         className={classes.timerHeader}
         style={
           isTimerStarted
-            ? { backgroundColor: "var(--red)", color: "white!important" }
+            ? { backgroundColor: "var(--red500)", color: "white!important" }
             : {}
         }
       >
@@ -82,7 +82,7 @@ export const Timer = () => {
         <div className="df gap20 ai-c">
           <div
             className={classes.timerCounts}
-            style={isTimerStarted ? { color: "#DC3E22" } : {}}
+            style={isTimerStarted ? { color: "var(--red500)" } : {}}
           >
             {timerString}
           </div>
@@ -93,9 +93,9 @@ export const Timer = () => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path
                 d="M4 12H20M12 4V20"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </div>

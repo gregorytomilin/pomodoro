@@ -21,7 +21,7 @@ export const setTimerStarted = createEvent<{
 export const resetTaskTimer = createEvent<string>();
 
 // Создаем хранилище для массива объектов
-export const $tasksArray = createStore<Array<TaskProps>>([])
+export const $tasksStore = createStore<Array<TaskProps>>([])
   .on(addTaskToArray, (state, task) => [...state, task]) // Добавляем объект в массив
   // Удаляем объект из массива по id
   .on(removeTaskFromArray, (state, idToRemove) =>
@@ -129,6 +129,6 @@ export const $tasksArray = createStore<Array<TaskProps>>([])
   });
 
 persist({
-  store: $tasksArray,
+  store: $tasksStore,
   key: "tasks",
 });

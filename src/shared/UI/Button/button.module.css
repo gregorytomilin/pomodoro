@@ -10,7 +10,7 @@
 }
 
 .red {
-  background-color: var(--red);
+  background-color: var(--red500);
   color: var(--text-color-light);
 }
 .red:hover {
@@ -30,8 +30,8 @@
   color: #c4c4c4;
 }
 .redBorder {
-  border: 1px solid var(--red);
-  color: var(--red);
+  border: 1px solid var(--red500);
+  color: var(--red500);
 }
 
 .button[disabled]:hover {

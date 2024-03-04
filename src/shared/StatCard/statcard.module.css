@@ -1,0 +1,17 @@
+.statCard {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-grow: 1;
+  background: var(--grey400);
+  padding: 20px;
+  color: var(--black600);
+}
+.statCard svg {
+  width: 110px;
+  height: 110px;
+  stroke: var(--grey500);
+}
+.statCard span {
+  color: var(--black600);
+}
