@@ -78,3 +78,8 @@
   color: var(--black600);
   padding: 20px;
 }
+
+ul.faq{
+  margin: 20px;
+  color: var(--red500)
+}

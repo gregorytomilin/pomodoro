@@ -2,7 +2,7 @@ export const FAQBlock = () => {
   return (
     <div className="df fd-c" style={{ color: "var(--text-color)" }}>
       <div className="fs24 fw-b">Ура! Теперь можно начать работать:</div>
-      <ul>
+      <ul className="df fd-c gap10 faq">
         <li className="fs18">
           Выберите категорию и напишите название текущей задачи{" "}
         </li>

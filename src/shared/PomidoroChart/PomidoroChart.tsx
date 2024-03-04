@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
-import { $progressStore, EditAction, editDay } from "../store/ProgressStore";
+import { $progressStore } from "../store/ProgressStore";
 import { useUnit } from "effector-react";
+import { useGetWeekData } from "./lib/useGetWeekData";
 
 interface chartItem {
   value: number;
@@ -10,31 +11,24 @@ interface chartItem {
   };
 }
 
-export const PomidoroChart = () => {
-  // const [workTimeArray, setWorkTimeArray] = useState<chartItem[]>([]);
+export const PomidoroChart = ({ choosenWeek }: { choosenWeek?: number }) => {
   const tasksStore = useUnit($progressStore);
 
-  const getWeeksData = tasksStore;
-  console.log(getWeeksData);
+  const choosenWeekData = useGetWeekData(
+    tasksStore,
+    typeof choosenWeek === "number" ? choosenWeek : 0
+  );
 
   const echartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!echartRef.current) return;
 
-    editDay({ type: EditAction.workTime, value: 10000 });
-
     echartRef.current.style.height = "450px";
 
-    const seriesData: chartItem[] = [
-      { value: 2500 },
-      { value: 2000 },
-      { value: 7100 },
-      { value: 2500 },
-      { value: 2500 },
-      { value: 800 },
-      { value: 2500 },
-    ];
+    const seriesData: chartItem[] = choosenWeekData.map((item) => ({
+      value: item.workTime ?? 0,
+    }));
 
     const maxYValue = Math.max(...seriesData.map((obj) => obj.value));
 
@@ -117,7 +111,7 @@ export const PomidoroChart = () => {
     return () => {
       myChart.dispose();
     };
-  }, []);
+  }, [choosenWeekData]);
 
   return <div className="df f-g card" ref={echartRef}></div>;
 };

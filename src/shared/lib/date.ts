@@ -1,4 +1,4 @@
-﻿export const getCurrentDay = (params?: string) => {
+﻿export const getDayProps = (params?: string, date?: Date) => {
   const daysOfWeek = [
     "понедельник",
     "вторник",
@@ -8,8 +8,7 @@
     "суббота",
     "воскресенье",
   ];
-  const today = new Date();
-  console.log(today.getDay());
+  const today = date ?? new Date();
 
   if (params) {
     switch (params) {
@@ -22,11 +21,16 @@
   return daysOfWeek[today.getDay() === 0 ? 6 : today.getDay() - 1];
 };
 
-export const getDate = () => {
-  const currentDate = new Date(); // Получаем текущую дату и время
+export const getDate = (date?: Date) => {
+  const currentDate = date ?? new Date(); // Получаем текущую дату и время
   const day = currentDate.getDate().toString().padStart(2, "0"); // Получаем день месяца и добавляем ведущий ноль при необходимости
   const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // Получаем месяц (индекс начинается с 0) и добавляем ведущий ноль при необходимости
   const year = currentDate.getFullYear(); // Получаем год
 
   return `${day}.${month}.${year}`;
+};
+
+export const fromDateToDate = (date: string) => {
+  const dateParts = date.split(".");
+  return new Date(`${dateParts[1]}.${dateParts[0]}.${dateParts[2]}`);
 };

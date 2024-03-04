@@ -1,4 +1,4 @@
-import { getCurrentDay } from "../lib/date";
+import { getDayProps } from "../lib/date";
 
 interface DayInfo {
   dayName?: string;
@@ -9,7 +9,7 @@ export const DayInfo = (props: DayInfo) => {
   return (
     <div className="df fd-c f-g gap20 card">
       <span>
-        {dayName ? dayName : (getCurrentDay() as string).toUpperCase()}
+        {dayName ? dayName : (getDayProps() as string).toUpperCase()}
       </span>
       <span>{workTime ? workTime : "нет данных"}</span>
     </div>
