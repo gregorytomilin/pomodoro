@@ -1,0 +1,1 @@
+const i=({fail:r,store:e,sync:g=1,def:n=e.defaultState,key:a},s=t=>o=>{try{t(o)}catch(d){r&&r(d)}},S=s(t=>e.setState((t=localStorage.getItem(a))==null?n:JSON.parse(t))))=>{S(),g&&s(t=>addEventListener("storage",t))(t=>!(t.key&&t.key!=a)&&S()),e.updates.watch(s(t=>localStorage.setItem(a,JSON.stringify(t))))};export{i as p};
