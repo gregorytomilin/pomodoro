@@ -7,25 +7,64 @@ import { TomatoCountInfometr } from "@/shared/TomatoCountInfometr";
 import Stop from "@assets/img/stop.svg?react";
 import Time from "@assets/img/time.svg?react";
 import Focus from "@assets/img/focus.svg?react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DayProgressProps } from "@/shared/store/ProgressStore";
+import { fromDateToDate, getDayProps } from "@/shared/lib/date";
 
 export const StatPage = () => {
-  const [choosenWeek, setChoosenWeek] = useState(0);
+  const [chosenWeek, setChoosenWeek] = useState(0);
+  const [selectedDate, setSelectedDate] = useState<null | DayProgressProps>(
+    null
+  );
 
+  useEffect(() => {
+    setSelectedDate(null);
+  }, [chosenWeek]);
   return (
     <div className="scaleIn df fd-c gap20">
       <StatHeader setChoosenWeek={setChoosenWeek} />
       <div className="df gap20">
-        <div className="df fd-c gap20">
-          <DayInfo />
-          <TomatoCountInfometr tomatoQantity={10} />
+        <div className="df fd-c gap20" style={{ width: "25%" }}>
+          <DayInfo
+            dayName={
+              selectedDate?.dayNumber
+                ? (getDayProps(
+                    "",
+                    fromDateToDate(selectedDate?.date)
+                  ) as string)
+                : ""
+            }
+            workTime={selectedDate?.workTime}
+          />
+          <TomatoCountInfometr tomatoQuantity={selectedDate?.pomidoroQ} />
         </div>
-        <PomidoroChart choosenWeek={choosenWeek} />
+        <PomidoroChart
+          chosenWeek={chosenWeek}
+          setSelectedDate={(selectedDate) => setSelectedDate(selectedDate)}
+        />
       </div>
       <div className="df gap20">
-        <StatCard title="Фокус" info={"0%"} Img={Focus} />
-        <StatCard title="Время на паузе" info={"0м"} Img={Time} />
-        <StatCard title="Остановки" info={"0"} Img={Stop} />
+        <StatCard
+          title="Фокус"
+          info={`${(
+            (selectedDate?.pauseTime ?? 0 + (selectedDate?.workTime ?? 0)) /
+            (selectedDate?.workTime ?? 1)
+          ).toFixed(2)}%`}
+          style={selectedDate?.workTime ? "orange" : ""}
+          Img={Focus}
+        />
+        <StatCard
+          title="Время на паузе"
+          info={`${selectedDate?.pauseTime ?? 0}м`}
+          Img={Time}
+          style={selectedDate?.workTime ? "violet" : ""}
+        />
+        <StatCard
+          title="Остановки"
+          info={`${selectedDate?.stopsQ ?? 0}`}
+          Img={Stop}
+          style={selectedDate?.workTime ? "blue" : ""}
+        />
       </div>
     </div>
   );

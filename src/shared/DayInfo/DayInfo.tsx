@@ -9,9 +9,17 @@ export const DayInfo = (props: DayInfo) => {
   return (
     <div className="df fd-c f-g gap20 card">
       <span>
-        {dayName ? dayName : (getDayProps() as string).toUpperCase()}
+        {dayName
+          ? dayName.toUpperCase()
+          : (getDayProps() as string).toUpperCase()}
       </span>
-      <span>{workTime ? workTime : "нет данных"}</span>
+      <span>
+        {workTime
+          ? `Вы работали над задачами в течение ${Math.floor(
+              workTime / 3600
+            )} часов ${Math.floor((workTime % 3600) / 60)} минут`
+          : "нет данных"}
+      </span>
     </div>
   );
 };

@@ -15,3 +15,24 @@
 .statCard span {
   color: var(--black600);
 }
+
+.orange{
+  background: var(--orange300);
+}
+.orange svg{
+  stroke: var(--orange400);
+}
+
+.violet{
+  background: var(--violet300);
+}
+.violet svg{
+  stroke: var(--violet400);
+}
+
+.blue{
+  background: var(--blue300);
+}
+.blue svg{
+  stroke: var(--blue400);
+}

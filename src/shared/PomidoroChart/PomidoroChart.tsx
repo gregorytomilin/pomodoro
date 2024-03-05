@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
-import { $progressStore } from "../store/ProgressStore";
+import { $progressStore, DayProgressProps } from "../store/ProgressStore";
 import { useUnit } from "effector-react";
 import { useGetWeekData } from "./lib/useGetWeekData";
 
@@ -11,7 +11,13 @@ interface chartItem {
   };
 }
 
-export const PomidoroChart = ({ choosenWeek }: { choosenWeek?: number }) => {
+export const PomidoroChart = ({
+  chosenWeek: choosenWeek,
+  setSelectedDate,
+}: {
+  chosenWeek?: number;
+  setSelectedDate: (selectedDate: DayProgressProps | null) => void;
+}) => {
   const tasksStore = useUnit($progressStore);
 
   const choosenWeekData = useGetWeekData(
@@ -106,7 +112,17 @@ export const PomidoroChart = ({ choosenWeek }: { choosenWeek?: number }) => {
         if (params.dataIndex === index) data.itemStyle = { color: "#DC3E22" };
         else data.itemStyle = { color: "#EA8A79" };
       });
+      setSelectedDate(choosenWeekData[params.dataIndex]);
       myChart.setOption(option);
+    });
+    myChart.getZr().on("click", (e) => {
+      if (!e.target) {
+        setSelectedDate(null);
+        option?.series[0]?.data.forEach((data) => {
+          data.itemStyle = { color: "#EA8A79" };
+        });
+        myChart.setOption(option);
+      }
     });
     return () => {
       myChart.dispose();

@@ -19,7 +19,8 @@ export enum EditAction {
   stopsQ = "stopsQ",
 }
 export const editDay = createEvent<{ type: EditAction; value: number }>();
-
+// TODO удалить перед продом
+localStorage.removeItem("progress");
 const currentDate = getDate();
 
 // Создаем хранилище для массива объектов
