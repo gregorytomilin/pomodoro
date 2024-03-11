@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEvent, useUnit } from "effector-react";
+import { useUnit } from "effector-react";
 import {
   $tasksStore,
   addMinute,
-  removePomidoro,
   removeTaskFromArray as removeTask,
   resetTaskTimer,
   setTimerStarted,
