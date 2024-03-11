@@ -9,7 +9,11 @@ import Time from "@assets/img/time.svg?react";
 import Focus from "@assets/img/focus.svg?react";
 import { useEffect, useState } from "react";
 import { DayProgressProps } from "@/shared/store/ProgressStore";
-import { fromDateToDate, getDayProps } from "@/shared/lib/date";
+import {
+  fromDateToDate,
+  getDayProps,
+  secToHoursMinutes,
+} from "@/shared/lib/date";
 
 export const StatPage = () => {
   const [chosenWeek, setChoosenWeek] = useState(0);
@@ -55,7 +59,11 @@ export const StatPage = () => {
         />
         <StatCard
           title="Время на паузе"
-          info={`${selectedDate?.pauseTime ?? 0}м`}
+          info={`${
+            selectedDate?.pauseTime
+              ? `${secToHoursMinutes(selectedDate.pauseTime).hours}ч.${secToHoursMinutes(selectedDate.pauseTime).min}м.`
+              : 0
+          }`}
           Img={Time}
           style={selectedDate?.workTime ? "violet" : ""}
         />

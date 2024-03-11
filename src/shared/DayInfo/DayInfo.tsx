@@ -1,4 +1,5 @@
-import { getDayProps } from "../lib/date";
+import { getDayProps, secToHoursMinutes } from "../lib/date";
+import { declOfNum } from "../lib/declOfNum";
 
 interface DayInfo {
   dayName?: string;
@@ -6,18 +7,24 @@ interface DayInfo {
 }
 export const DayInfo = (props: DayInfo) => {
   const { dayName, workTime } = props;
+
+  const { hours, min } = secToHoursMinutes(workTime);
   return (
     <div className="df fd-c f-g gap20 card">
-      <span>
+      <span className="fw-b fs24">
         {dayName
           ? dayName.toUpperCase()
           : (getDayProps() as string).toUpperCase()}
       </span>
-      <span>
+      <span className="fs18">
         {workTime
-          ? `Вы работали над задачами в течение ${Math.floor(
-              workTime / 3600
-            )} часов ${Math.floor((workTime % 3600) / 60)} минут`
+          ? `Вы работали над задачами в течение ${hours} ${declOfNum(
+            hours,
+              ["час", "часов", "часов"]
+            )} ${min} ${declOfNum(
+              min,
+                ["минуты", "минут", "минут"]
+              )}`
           : "нет данных"}
       </span>
     </div>

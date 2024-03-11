@@ -1,9 +1,17 @@
 import { createEvent, createStore } from "effector";
-import { TaskProps } from "../TasksCreactor";
 import { Bounce, toast } from "react-toastify";
 import persist from "effector-localstorage";
-import { TIMER_DURATION } from "../../consts";
+import { TASK_TIMER_DURATION } from "../../consts";
 
+export type TaskProps = {
+  id: string;
+  task: string;
+  timeSpent?: number;
+  pomidoroQuantity: number;
+  taskTimeRemaining: number;
+  breakTimeRemaining: number;
+  isTaskStarted: boolean;
+};
 export const addTaskToArray = createEvent<TaskProps>();
 export const removeTaskFromArray = createEvent<string>();
 export const editTask = createEvent<{ id: string; task: string }>();
@@ -11,8 +19,13 @@ export const timerTask = createEvent<{
   id: string;
   secondsRemaining: number;
 }>();
+export const timerBreak = createEvent<{
+  id: string;
+  secondsRemaining: number;
+}>();
 export const addPomidoro = createEvent<{ id: string }>();
 export const removePomidoro = createEvent<{ id: string }>();
+export const justRemovePomidoro = createEvent<{ id: string }>();
 export const addMinute = createEvent<{ id: string }>();
 export const setTimerStarted = createEvent<{
   id: string;
@@ -53,7 +66,19 @@ export const $tasksStore = createStore<Array<TaskProps>>([])
       if (task.id === editedTask.id) {
         return {
           ...task,
-          currentPomidoroTimeRemaining: editedTask.secondsRemaining,
+          taskTimeRemaining: editedTask.secondsRemaining,
+        };
+      }
+      return task;
+    });
+  })
+  // Редактируем объект из массива по id
+  .on(timerBreak, (state, editedTask) => {
+    return state.map((task) => {
+      if (task.id === editedTask.id) {
+        return {
+          ...task,
+          breakTimeRemaining: editedTask.secondsRemaining,
         };
       }
       return task;
@@ -67,7 +92,7 @@ export const $tasksStore = createStore<Array<TaskProps>>([])
         : task
     )
   )
-  // Удаляем помидор
+  // Удаляем помидор до 1 потом говорим не надо так делать
   .on(removePomidoro, (state, editedTask) =>
     state.map((task) => {
       if (task.id === editedTask.id) {
@@ -93,13 +118,21 @@ export const $tasksStore = createStore<Array<TaskProps>>([])
       return task;
     })
   )
+  // Тупо Удаляем помидор
+  .on(justRemovePomidoro, (state, editedTask) =>
+    state.map((task) => {
+      if (task.id === editedTask.id) {
+        return { ...task, pomidoroQuantity: (task.pomidoroQuantity -= 1) };
+      }
+      return task;
+    })
+  )
   .on(addMinute, (state, editedTask) =>
     state.map((task) => {
       if (task.id === editedTask.id) {
         return {
           ...task,
-          currentPomidoroTimeRemaining:
-            (task.currentPomidoroTimeRemaining += 60),
+          taskTimeRemaining: (task.taskTimeRemaining += 60),
         };
       }
       return task;
@@ -121,7 +154,7 @@ export const $tasksStore = createStore<Array<TaskProps>>([])
       if (task.id === taskId) {
         return {
           ...task,
-          currentPomidoroTimeRemaining: TIMER_DURATION,
+          taskTimeRemaining: TASK_TIMER_DURATION,
         };
       }
       return task;

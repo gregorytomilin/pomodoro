@@ -34,3 +34,11 @@ export const fromDateToDate = (date: string) => {
   const dateParts = date.split(".");
   return new Date(`${dateParts[1]}.${dateParts[0]}.${dateParts[2]}`);
 };
+
+export const secToHoursMinutes = (sec: number | undefined) => {
+  if (!sec) return { hours: 0, min: 0 };
+  // return `${Math.floor(sec / 3600)} часов ${Math.floor(
+  //   (sec % 3600) / 60
+  // )} минут`;
+  return { hours: Math.floor(sec / 3600), min: Math.floor((sec % 3600) / 60) };
+};
