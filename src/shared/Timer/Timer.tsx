@@ -24,7 +24,6 @@ import { dzinDzin } from "../lib/sound";
 import { BREAK_TIMER_DURATION, TASK_TIMER_DURATION } from "@/consts";
 import { Bounce, toast } from "react-toastify";
 import {
-  $progressStore,
   EditAction,
   editDay as editDayProgressStore,
 } from "../store/ProgressStore";
