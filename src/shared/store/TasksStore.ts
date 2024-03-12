@@ -1,7 +1,7 @@
 import { createEvent, createStore } from "effector";
 import { Bounce, toast } from "react-toastify";
 import persist from "effector-localstorage";
-import { TASK_TIMER_DURATION } from "../../consts";
+import { BREAK_TIMER_DURATION, TASK_TIMER_DURATION } from "../../consts";
 
 export type TaskProps = {
   id: string;
@@ -32,6 +32,7 @@ export const setTimerStarted = createEvent<{
   isStarted: boolean;
 }>();
 export const resetTaskTimer = createEvent<string>();
+export const resetBreakTimer = createEvent<string>();
 
 // Создаем хранилище для массива объектов
 export const $tasksStore = createStore<Array<TaskProps>>([])
@@ -155,6 +156,17 @@ export const $tasksStore = createStore<Array<TaskProps>>([])
         return {
           ...task,
           taskTimeRemaining: TASK_TIMER_DURATION,
+        };
+      }
+      return task;
+    });
+  })
+  .on(resetBreakTimer, (state, taskId) => {
+    return state.map((task) => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          breakTimeRemaining: BREAK_TIMER_DURATION,
         };
       }
       return task;

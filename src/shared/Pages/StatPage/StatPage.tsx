@@ -50,10 +50,12 @@ export const StatPage = () => {
       <div className="df gap20">
         <StatCard
           title="Фокус"
-          info={`${(
-            (selectedDate?.pauseTime ?? 0 + (selectedDate?.workTime ?? 0)) /
-            (selectedDate?.workTime ?? 1)
-          ).toFixed(2)}%`}
+          info={`${
+            ((
+              (selectedDate?.pauseTime ?? 0 + (selectedDate?.workTime ?? 0)) /
+              (selectedDate?.workTime ?? 1)
+            ) * 100).toFixed(0)
+          }%`}
           style={selectedDate?.workTime ? "orange" : ""}
           Img={Focus}
         />
@@ -61,7 +63,9 @@ export const StatPage = () => {
           title="Время на паузе"
           info={`${
             selectedDate?.pauseTime
-              ? `${secToHoursMinutes(selectedDate.pauseTime).hours}ч.${secToHoursMinutes(selectedDate.pauseTime).min}м.`
+              ? `${secToHoursMinutes(selectedDate.pauseTime).hours}ч.${
+                  secToHoursMinutes(selectedDate.pauseTime).min
+                }м.`
               : 0
           }`}
           Img={Time}

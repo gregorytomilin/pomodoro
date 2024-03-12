@@ -9,6 +9,7 @@ import {
   timerBreak as setStoreBreakTimeRemaining,
   timerTask as setStoreTaskTimeRemaining,
   justRemovePomidoro,
+  resetBreakTimer,
 } from "../store/TasksStore";
 import classes from "./timer.module.css";
 import { Button } from "../UI/Button";
@@ -22,11 +23,17 @@ import notasks from "@assets/img/notasks.gif";
 import { dzinDzin } from "../lib/sound";
 import { BREAK_TIMER_DURATION, TASK_TIMER_DURATION } from "@/consts";
 import { Bounce, toast } from "react-toastify";
+import {
+  $progressStore,
+  EditAction,
+  editDay as editDayProgressStore,
+} from "../store/ProgressStore";
 
 export const Timer = () => {
   const tasksStore = useUnit($tasksStore);
 
   const secToTimer = useSecondsToMinutes();
+
   const [isTimerStarted, setIsTimerStarted] = useState(false);
   const [isTimeForBreak, setIsTimeForBreak] = useState(false);
   const [timerString, setTimerString] = useState("00:00");
@@ -112,12 +119,16 @@ export const Timer = () => {
     if (currentTask.taskTimeRemaining === 0) {
       // Удаляем один помидор
       justRemovePomidoro({ id: currentTask.id });
-      console.log(tasksStore);
+      // Добавляем помидор в копилку
+      editDayProgressStore({
+        type: EditAction.pomidoroQ,
+      });
 
       // Вызываем колокол
       dzinDzin();
       // Указываем для задачи что таймер задач остановлен
       setIsTimerStarted(false);
+      setTimerStarted({ id: currentTask.id, isStarted: false });
       // Включаем режим паузы
       setIsTimeForBreak(true);
       // Устанавливаем время паузы
@@ -133,6 +144,10 @@ export const Timer = () => {
       id: currentTask.id,
       secondsRemaining: (currentTask.taskTimeRemaining -= 1),
     });
+    // Добавляем секунду в копилку времени работы
+    editDayProgressStore({
+      type: EditAction.workTime,
+    });
   };
   const breakTimerHandler = () => {
     setTimerString(secToTimer(currentTask.breakTimeRemaining));
@@ -140,10 +155,11 @@ export const Timer = () => {
     if (currentTask.breakTimeRemaining === 0) {
       // Вызываем колокол
       dzinDzin();
-      // Указываем для задачи что таймер остановлен
-      setIsTimerStarted(false);
+
       // Выключаем режим паузы
       setIsTimeForBreak(false);
+      // Указываем для задачи что таймер остановлен
+      setIsTimerStarted(false);
       setTimerStarted({ id: currentTask.id, isStarted: false });
       setStoreTaskTimeRemaining({
         id: currentTask.id,
@@ -155,6 +171,10 @@ export const Timer = () => {
     setStoreBreakTimeRemaining({
       id: currentTask.id,
       secondsRemaining: (currentTask.breakTimeRemaining -= 1),
+    });
+    // Добавляем секунду в копилку паузы
+    editDayProgressStore({
+      type: EditAction.pauseTime,
     });
   };
 
@@ -192,10 +212,16 @@ export const Timer = () => {
 
   /** Сброс таймера - кнопка "Стоп" */
   const resetTimer = () => {
-    setIsTimerStarted(false);
-    resetTaskTimer(currentTask.id);
+    isTimeForBreak
+      ? resetBreakTimer(currentTask.id)
+      : resetTaskTimer(currentTask.id);
     // Указываем что старт таймера скинут
+    setIsTimerStarted(false);
     setTimerStarted({ id: currentTask.id, isStarted: false });
+
+    editDayProgressStore({
+      type: EditAction.stopsQ,
+    });
   };
 
   return (
@@ -275,7 +301,11 @@ export const Timer = () => {
               }
             }}
           >
-            {!isTimerStarted && currentTask.isTaskStarted ? "Сделано" : "Стоп"}
+            {!isTimerStarted && currentTask.isTaskStarted
+              ? isTimeForBreak
+                ? "Пропустить"
+                : "Сделано"
+              : "Стоп"}
           </Button>
         </div>
       </div>

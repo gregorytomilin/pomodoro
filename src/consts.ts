@@ -1,2 +1,2 @@
-export const TASK_TIMER_DURATION = 3;
-export const BREAK_TIMER_DURATION = 5;
+export const TASK_TIMER_DURATION = 1500;
+export const BREAK_TIMER_DURATION = 300;

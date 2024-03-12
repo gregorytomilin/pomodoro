@@ -40,10 +40,12 @@ export const PomidoroChart = ({
 
     const interval = (() => {
       switch (true) {
+        case maxYValue < 100:
+          return 10;
         case maxYValue < 1000:
           return 1800;
         case maxYValue < 7200:
-          return 1500;
+          return 2500;
         default:
           return 3600;
       }
@@ -78,20 +80,26 @@ export const PomidoroChart = ({
 
             // Вычисляем количество целых минут из оставшихся секунд
             const minutes = Math.floor(remainingSeconds / 60);
+            const sec = remainingSeconds;
 
-            return hours ? `${hours}ч ${minutes} мин` : `${minutes} мин`;
+            return hours
+              ? `${hours}ч ${minutes} мин`
+              : minutes
+              ? `${minutes} мин`
+              : `${sec} сек`;
           },
         },
       },
       series: [
         {
-          name: "Отработано Часов",
+          name: "Отработано",
           type: "bar",
           data: seriesData,
           color: "red",
           itemStyle: {
             color: "#EA8A79", // Задаем цвет столбцов
           },
+
           emphasis: {
             itemStyle: {
               color: "#DC3E22", // Цвет столбцов при наведении
