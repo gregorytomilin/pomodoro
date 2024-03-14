@@ -10,6 +10,7 @@ import {
   timerTask as setStoreTaskTimeRemaining,
   justRemovePomidoro,
   resetBreakTimer,
+  setStoreTimerId,
 } from "../store/TasksStore";
 import classes from "./timer.module.css";
 import { Button } from "../UI/Button";
@@ -21,7 +22,11 @@ import { useEffect, useState } from "react";
 
 import notasks from "@assets/img/notasks.gif";
 import { dzinDzin } from "../lib/sound";
-import { BREAK_TIMER_DURATION, TASK_TIMER_DURATION } from "@/consts";
+import {
+  BIG_BREAK_TIMER_DURATION,
+  BREAK_TIMER_DURATION,
+  TASK_TIMER_DURATION,
+} from "@/consts";
 import { Bounce, toast } from "react-toastify";
 import {
   EditAction,
@@ -37,6 +42,7 @@ export const Timer = () => {
   const [isTimeForBreak, setIsTimeForBreak] = useState(false);
   const [timerString, setTimerString] = useState("00:00");
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [breakIndex, setBreakIndex] = useState(0);
 
   /** Текущее задание */
   const currentTask = tasksStore.at(-1);
@@ -63,6 +69,15 @@ export const Timer = () => {
   ]);
 
   useEffect(() => {
+    // Если у currentTask есть таймерID значит таймер запущен
+    if (currentTask?.timerId) {
+      setIsTimerStarted(true);
+      setIntervalId(currentTask.timerId);
+      if (currentTask.breakTimeRemaining) setIsTimeForBreak(true);
+      // startTimer(isTimeForBreak ? breakTimerHandler : taskTimerHandler);
+    }
+
+    // Устанавливаем отображение таймера если есть
     setTimerString(
       secToTimer(
         (currentTask?.breakTimeRemaining || currentTask?.taskTimeRemaining) ?? 0
@@ -94,6 +109,11 @@ export const Timer = () => {
       if (store.length === 0) {
         resetTimerStates();
       }
+
+      if (!currentTask?.timerId && intervalId) {
+        clearInterval(intervalId);
+        setIntervalId(null);
+      }
     });
     return () => cancelStoreWatch();
   }, []);
@@ -104,6 +124,7 @@ export const Timer = () => {
     // Выключаем режим паузы
     setIsTimeForBreak(false);
   };
+
   if (!currentTask)
     return (
       <div className="df jc-c ai-c">
@@ -130,14 +151,21 @@ export const Timer = () => {
       setTimerStarted({ id: currentTask.id, isStarted: false });
       // Включаем режим паузы
       setIsTimeForBreak(true);
-      // Устанавливаем время паузы
+
+      setBreakIndex((prev) => {
+        if (prev === 3) return 0;
+        return (prev += 1);
+      });
+
       setStoreBreakTimeRemaining({
         id: currentTask.id,
-        secondsRemaining: BREAK_TIMER_DURATION,
+        secondsRemaining:
+          breakIndex === 2 ? BIG_BREAK_TIMER_DURATION : BREAK_TIMER_DURATION,
       });
 
       return;
     }
+
     // Каждй тик убираем одну секунду
     setStoreTaskTimeRemaining({
       id: currentTask.id,
@@ -180,6 +208,7 @@ export const Timer = () => {
   const startTimer = (timeFunc: () => void) => {
     const newTimerId = timer(timeFunc);
     setIntervalId(newTimerId);
+    setStoreTimerId(newTimerId);
   };
 
   const timer = (timer: () => void) => {
@@ -188,6 +217,7 @@ export const Timer = () => {
 
   /** Завершение задачи / кнопка "Сделано" */
   const timerDone = () => {
+    setStoreTimerId(null);
     if (isTimeForBreak) {
       // Указываем для задачи что таймер остановлен
       setIsTimerStarted(false);
@@ -204,13 +234,16 @@ export const Timer = () => {
         id: currentTask.id,
         secondsRemaining: 0,
       });
+
       return;
     }
+
     removeTask(currentTask.id);
   };
 
   /** Сброс таймера - кнопка "Стоп" */
   const resetTimer = () => {
+    setStoreTimerId(null);
     isTimeForBreak
       ? resetBreakTimer(currentTask.id)
       : resetTaskTimer(currentTask.id);
@@ -257,7 +290,7 @@ export const Timer = () => {
             {timerString}
           </div>
           <div
-            className={classes.addMinutes}
+            className="roundedButton"
             onClick={() => addMinute({ id: currentTask.id })}
           >
             <Plus />
@@ -268,10 +301,13 @@ export const Timer = () => {
           <Button
             style={ButtonStyles.Green}
             onClick={() => {
-              !isTimerStarted &&
+              if (!isTimerStarted) {
                 startTimer(
                   isTimeForBreak ? breakTimerHandler : taskTimerHandler
                 );
+              } else {
+                setStoreTimerId(null);
+              }
               setIsTimerStarted((prev) => !prev);
             }}
           >

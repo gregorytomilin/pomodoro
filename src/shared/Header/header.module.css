@@ -4,6 +4,9 @@
   gap: 20px;
   padding: 20px;
 }
+.header svg {
+  width: 20px;
+}
 .logo {
   width: 200px;
 }

@@ -11,6 +11,7 @@ export type TaskProps = {
   taskTimeRemaining: number;
   breakTimeRemaining: number;
   isTaskStarted: boolean;
+  timerId?: NodeJS.Timeout | null;
 };
 export const addTaskToArray = createEvent<TaskProps>();
 export const removeTaskFromArray = createEvent<string>();
@@ -33,6 +34,7 @@ export const setTimerStarted = createEvent<{
 }>();
 export const resetTaskTimer = createEvent<string>();
 export const resetBreakTimer = createEvent<string>();
+export const setStoreTimerId = createEvent<NodeJS.Timeout | null>();
 
 // Создаем хранилище для массива объектов
 export const $tasksStore = createStore<Array<TaskProps>>([])
@@ -167,6 +169,17 @@ export const $tasksStore = createStore<Array<TaskProps>>([])
         return {
           ...task,
           breakTimeRemaining: BREAK_TIMER_DURATION,
+        };
+      }
+      return task;
+    });
+  })
+  .on(setStoreTimerId, (state, intervalId) => {
+    return state.map((task) => {
+      if (task.id === state[state.length - 1].id) {
+        return {
+          ...task,
+          timerId: intervalId,
         };
       }
       return task;

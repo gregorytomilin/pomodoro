@@ -26,7 +26,7 @@ export const Task = (props: TaskProps) => {
   };
   return (
     <div className={classes.task} ref={taskRef}>
-      <div className="df gap10">
+      <div className="df ai-c gap10">
         <div className={classes.pomidoroQuantity}>{pomidoroQuantity}</div>
         {editMode ? (
           <>

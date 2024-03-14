@@ -7,6 +7,7 @@ import { Page404 } from "./shared/Pages/Page404";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import { SetsPage } from "./shared/Pages/SetsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/pomodoro/" element={<TasksPage />} />
             <Route path="/pomodoro/stat" element={<StatPage />} />
+            <Route path="/pomodoro/sets" element={<SetsPage />} />
             <Route path="*" element={<Page404 />} />
           </Routes>
         </div>

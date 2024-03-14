@@ -1,7 +1,8 @@
 import classes from "./header.module.css";
 
-import logo from "../../assets/img/logo.png";
-import stat from "../../assets/img/stat.png";
+import logo from "@assets/img/logo.png";
+import stat from "@assets/img/stat.png";
+import Sets from "@assets/svg/sets.svg?react";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
@@ -12,10 +13,15 @@ export const Header = () => {
           <img className={classes.logo} src={logo} alt="logo" />
         </Link>
       </div>
-      <Link to="/pomodoro/stat" className={classes.stat}>
-        <img src={stat} alt="" />
-        статистика
-      </Link>
+      <div className="df gap10">
+        <Link to="/pomodoro/sets" className={classes.stat}>
+          <Sets />
+        </Link>
+        <Link to="/pomodoro/stat" className={classes.stat}>
+          <img src={stat} alt="" />
+          статистика
+        </Link>
+      </div>
     </div>
   );
 };

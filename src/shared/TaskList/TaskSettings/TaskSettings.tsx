@@ -1,7 +1,7 @@
 import classes from "./sets.module.css";
 import pencil from "@assets/svg/pencil.svg";
 import plus from "@assets/svg/plusInCircle.svg";
-import minus from "@assets/svg/minus.svg";
+import minus from "@assets/svg/minusInCircle.svg";
 import trash from "@assets/svg/trash.svg";
 import {
   addPomidoro,

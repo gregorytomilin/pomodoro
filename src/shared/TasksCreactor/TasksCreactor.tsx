@@ -6,8 +6,12 @@ import { uid } from "uid";
 import { ButtonStyles } from "../UI/Button/ButtonStyles.enum";
 import { TaskProps, addTaskToArray } from "../store/TasksStore";
 import { TASK_TIMER_DURATION } from "@/consts";
+// import { $setsStore } from "../store/SetsStore";
 
-export const TaskCreactor = () => {
+export const TaskCreator = () => {
+  // const setsStore = useUnit($setsStore);
+
+  // const taskDuration = setsStore.find((set) => set.name === "Помидор")?.value;
   const [inputValue, inputChangedHandler] = useUnit([
     $inputValue,
     inputChanger,
